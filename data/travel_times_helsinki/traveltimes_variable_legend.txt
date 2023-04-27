@@ -1,0 +1,18 @@
+from_id,ID number of the origin grid cell
+to_id,ID number of the destination grid cell
+walk_t,Travel time in minutes from origin to destination by walking
+walk_d,Distance in meters of the walking route
+bike_f_t,Total travel time in minutes from origin to destination by fast cycling; Includes extra time (1 min) that it takes to take/return bike
+bike_s_t,Total travel time in minutes from origin to destination by slow cycling; Includes extra time (1 min) that it takes to take/return bike
+bike_d,Distance in meters of the cycling route
+pt_r_tt,Travel time in minutes from origin to destination by public transportation in rush hour traffic; whole travel chain has been taken into acount including the waiting time at home
+pt_r_t,Travel time in minutes from origin to destination by public transportation in rush hour traffic; whole travel chain has been taken into account excluding the waiting time at home
+pt_r_d,Distance in meters of the public transportation route in rush hour traffic
+pt_m_tt,Travel time in minutes from origin to destination by public transportation in midday traffic; whole travel chain has been taken into acount including the waiting time at home
+pt_m_t,Travel time in minutes from origin to destination by public transportation in midday traffic; whole travel chain has been taken into account excluding the waiting time at home
+pt_m_d,Distance in meters of the public transportation route in midday traffic
+car_r_t,Travel time in minutes from origin to destination by private car in rush hour traffic; the whole travel chain has been taken into account (see “Methods” section below)
+car_r_d,Distance in meters of the private car route in rush hour traffic
+car_m_t,Travel time in minutes from origin to destination by private car in midday traffic; the whole travel chain has been taken into account (see “Methods” section below)
+car_m_d,Distance in meters of the private car route in midday traffic
+car_sl_t,ravel time from origin to destination by private car following speed limits without any additional impedances; the whole travel chain has been taken into account (see “Methods” section below)

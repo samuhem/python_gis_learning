@@ -1,0 +1,5 @@
+Get the grid as shapefile from:
+https://etsin.fairdata.fi/dataset/2c8d9f49-d1c7-4820-8774-68f08d67ef77/data
+
+Or directly from:
+http://www.nic.funet.fi/index/geodata/hy/travel_CO2/2015/metropaccessykrgrid.zip

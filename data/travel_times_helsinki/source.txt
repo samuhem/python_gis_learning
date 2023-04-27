@@ -1,0 +1,141 @@
+This is a large file, get the  archieve from:
+https://blogs.helsinki.fi/accessibility/helsinki-region-travel-time-matrix-2018/
+
+
+Helsinki Region Travel Time Matrix 2018
+
+—————————————————————————————————–
+DATA DESCRIPTION
+—————————————————————————————————–
+
+The data consists of travel time and distance information of the routes that have been calculated from all SYKE (Finnish Environment Institute) YKR grid cell centroids (n = 13231) to all YKR grid cell centroids (n = 13231) by walking, cycling, public transportation and car.
+
+In the 2018 data, the results have been calculated for two different times of the day: 1) midday and 2) rush hour.
+
+The data may be used freely (see the licence text below). We do not take any responsibility for any mistakes, errors or other deficiencies in the data.
+
+—————————————————————————————————–
+DOWNLOAD THE DATA
+—————————————————————————————————–
+
+The data have been divided into 13231 text files according to destinations of the routes. The datafiles have been organized into subfolders that contain multiple (approx. 4-150) Travel Time Matrix result files. Individual folders consist of all the Travel Time Matrices that have same first four digits in their filename (e.g. 5785xxx).
+
+In order to visualize the data on a map, the result tables can be joined with the YKR-grid shapefile. The data can be joined by using the field ‘from_id’ in the text files and the field ‘YKR_ID’ in MetropAccess-YKR-grid shapefile as a common key.
+
+    Download all the result files in a single zip-package from this link:
+    HelsinkiRegion_TravelTimeMatrix2018.zip  
+
+    Download the grid shapefile from this link:
+    MetropAccess_YKR_grid.zip
+
+—————————————————————————————————–
+DATA STRUCTURE
+—————————————————————————————————–
+
+The data have been divided into 13231 text files according to destinations of the routes. One file includes the routes from all YKR grid cells to a particular destination grid cell. All files have been named according to the destination grid cell code and each file includes 13231 rows.
+
+NODATA values have been stored as value -1.
+
+Each file consists of 17 attribute fields: 1) from_id, 2) to_id, 3) walk_t, 4) walk_d, 5) bike_f_t, 6) bike_s_t, 7) bike_d, 8) pt_r_tt, 9) pt_r_t, 10) pt_r_d, 11) pt_m_tt, 12) pt_m_t, 13) pt_m_d, 14) car_r_t, 15) car_r_d, 16) car_m_t, 17) car_m_d, 18) car_sl_t
+
+The fields are separated by semicolon in the text files.
+
+ATTRIBUTES:
+from_id: 	ID number of the origin grid cell
+to_id: 	ID number of the destination grid cell
+walk_t: 	Travel time in minutes from origin to destination by walking
+walk_d: 	Distance in meters of the walking route
+bike_f_t: 	Total travel time in minutes from origin to destination by fast cycling; Includes extra time (1 min) that it takes to take/return bike
+bike_s_t: 	Total travel time in minutes from origin to destination by slow cycling; Includes extra time (1 min) that it takes to take/return bike
+bike_d: 	Distance in meters of the cycling route
+pt_r_tt: 	Travel time in minutes from origin to destination by public transportation in rush hour traffic; whole travel chain has been taken into acount including the waiting time at home
+pt_r_t: 	Travel time in minutes from origin to destination by public transportation in rush hour traffic; whole travel chain has been taken into account excluding the waiting time at home
+pt_r_d: 	Distance in meters of the public transportation route in rush hour traffic
+pt_m_tt: 	Travel time in minutes from origin to destination by public transportation in midday traffic; whole travel chain has been taken into acount including the waiting time at home
+pt_m_t: 	Travel time in minutes from origin to destination by public transportation in midday traffic; whole travel chain has been taken into account excluding the waiting time at home
+pt_m_d: 	Distance in meters of the public transportation route in midday traffic
+car_r_t:  	Travel time in minutes from origin to destination by private car in rush hour traffic; the whole travel chain has been taken into account (see “Methods” section below)
+car_r_d: 	Distance in meters of the private car route in rush hour traffic
+car_m_t: 	Travel time in minutes from origin to destination by private car in midday traffic; the whole travel chain has been taken into account (see “Methods” section below)
+car_m_d: 	Distance in meters of the private car route in midday traffic
+car_sl_t:  	Travel time from origin to destination by private car following speed limits without any additional impedances; the whole travel chain has been taken into account (see “Methods” section below)
+
+NODATA values have been described as value -1.
+
+—————————————————————————————————–
+METHODS
+—————————————————————————————————–
+
+THE ROUTE BY CAR have been calculated with the open tool called DORA (DOor-to-door Routing Analyst) developed in this project. DORA uses PostgreSQL database with PostGIS extension and is based on the pgRouting toolkit. MetropAccess-Digiroad (modified from the original Digiroad data provided by Finnish Transport Agency) has been used as Network Dataset in which the travel times of the road segments are made more realistic by adding crossroad impedances for different road classes.
+
+The calculations have been repeated for two times of the day using 1) the “midday impedance” (i.e. travel times outside rush hour) and 2) the “rush hour impendance” as impedance in the calculations. Moreover, there is 3) the “speed limit impedance” calculated in the matrix (i.e. using speed limit without any additional impedances).
+
+The whole travel chain (“door-to-door approach”) is taken into account in the calculations:
+1) walking time from the real origin to the nearest network location (based on Euclidean distance),
+2) average walking time from the origin to the parking lot,
+3) travel time from parking lot to destination,
+4) average time for searching a parking lot,
+5) walking time from parking lot to nearest network location of the destination and
+6) walking time from network location to the real destination (based on Euclidean distance).
+
+Car comparisons between matrixes: Things to note
+1) In Helsinki area the speed limits have been lowered compared to 2015. For example in most of the access roads the speed limits are now 30km/h
+2) In the 2013 and 2015 matrix datasets the speed limit for car along Mannerheimintie and Sörnäisten rantatie was incorrectly set to 80km/h. In the 2018 matrix dataset the speed limits there have been set to match the real speed limits (50 km/h).
+
+THE ROUTES BY PUBLIC TRANSPORTATION have been calculated by using the MetropAccess-Reititin tool which also takes into account the whole travel chains from the origin to the destination:
+1) possible waiting at home before leaving,
+2) walking from home to the transit stop,
+3) waiting at the transit stop,
+4) travel time to next transit stop,
+5) transport mode change,
+6) travel time to next transit stop and
+7) walking to the destination.
+
+Travel times by public transportation have been optimized using 10 different departure times within the calculation hour using so called Golomb ruler. The fastest route from these calculations are selected for the final travel time matrix.
+
+Calculations of 2018 MetropAccess-Travel Time Matrix are based on schedules of Monday 29.01.2018:
+1) Midday (optimized between 12:00-13:00 ) –> Comparable with 1st and 2nd version of MetropAccess-Travel Time Matrix
+2) Rush hour (optimized between 08:00-09:00) –> Comparable with 2nd version of MetropAccess-Travel Time Matrix
+
+THE ROUTES BY CYCLING are also calculated using the DORA tool. The network dataset underneath is MetropAccess-CyclingNetwork, which is a modified version from the original Digiroad data provided by Finnish Transport Agency. In the dataset the travel times for the road segments have been modified to be more realistic based on Strava sports application data from the Helsinki region from 2016 and the bike sharing system data from Helsinki from 2017.
+
+For each road segment a separate speed value was calculated for slow and fast cycling. The value for fast cycling is based on a percentual difference  between segment specific Strava speed value and the average speed value for the whole Strava data. This same percentual difference has been applied to calculate the slower speed value for each road segment. The speed value is then the average speed value of bike sharing system users multiplied by the percentual difference value.
+
+The reference value for faster cycling has been 19km/h, which is based on the average speed of Strava sports application users in the Helsinki region. The reference value for slower cycling has been 12km/, which has been the average travel speed of bike sharing system users in Helsinki. Additional 1 minute have been added to the travel time to consider the time for taking (30s) and returning (30s) bike on the origin/destination.
+
+More information of the Strava dataset that was used can be found from the Cycling routes and fluency report, which was published by us and the city of Helsinki.
+
+THE ROUTES BY WALKING were also calculated using the MetropAccess-Reititin by disabling all motorized transport modesin the calculation. Thus, all routes are based on the Open Street Map geometry.
+
+The walking speed has been adjusted to 70 meters per minute, which is the default speed in the HSL Journey Planner (also in the calculations by public transportation).
+
+All calculations were done using the computing resources of CSC-IT Center for Science (https://www.csc.fi/home).
+
+—————————————————————————————————–
+CITATION
+—————————————————————————————————–
+If you use Helsinki Region-Travel Time Matrix 2018 dataset or related tools in your work, we encourage you to cite properly to our work.
+
+Data/Tools description:
+Toivonen, T., M. Salonen, H. Tenkanen, P. Saarsalmi, T. Jaakkola & J. Järvi (2014). Joukkoliikenteellä, autolla ja kävellen: Avoin saavutettavuusaineisto pääkaupunkiseudulla. Terra 126: 3, 127-136.
+
+Tenkanen H., Toivonen, T. (2020). Longitudinal spatial dataset on travel times and distances by different travel modes in Helsinki Region. Scientific Data. 7: 77. https://doi.org/10.1038/s41597-020-0413-y
+
+DOI name for the dataset:
+Tenkanen, H., J.L. Espinosa, E. Willberg, V. Heikinheimo, A. Tarnanen, T. Jaakkola, J. Järvi, M. Salonen, T. Toivonen (2018). Helsinki Region Travel Time Matrix 2018. DOI: 10.13140/RG.2.2.20858.39362
+
+—————————————————————————————————–
+DOCUMENTATION
+—————————————————————————————————–
+
+The whole documentation of the Travel Time Matrix 2018 dataset can be found from Github https://github.com/AccessibilityRG/HelsinkiRegionTravelTimeMatrix2018.
+
+The metadata file is also included to the download package
+
+—————————————————————————————————–
+
+LICENSE
+—————————————————————————————————–
+Helsinki Region Travel Time Matrix by MetropAccess-project/ Accessibility Research Group (University of Helsinki) is licensed under a Creative Commons Attribution 4.0 International License. More information about license: http://creativecommons.org/licenses/by/4.0/
+
+If the datasets are being used extensively in scientific research, we welcome the opportunity for co-authorship of papers. Please contact project leader to discuss about the matter.
